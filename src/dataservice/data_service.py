@@ -4,9 +4,11 @@ from dotenv import load_dotenv
 
 from typing import Optional, Union
 from .model.data import RowData, ListData
+from .utils.download_file import download_file
 
 load_dotenv()
 
+URL = os.getenv("URL_FILE")
 FILES_FOLDER_NAME:str = os.getenv("FILE_FOLDER_NAME")
 FILE_NAME:str = os.getenv("FILE_NAME")
 FILE_PATH:str = f"./{FILES_FOLDER_NAME}/{FILE_NAME}"
@@ -16,10 +18,10 @@ class DataService:
     lazy_frame: Optional[pl.LazyFrame]
 
     def __init__(self, path:str=FILE_PATH):
+        download_file(url=URL)
         self.path_file = path
         self._load_csv()
-
-
+        
     def _load_csv(self, sep:str=",")->None:
         """ Load data from CSV file """
         self.lazy_frame = pl.scan_csv(source=self.path_file, has_header=True, separator=sep,infer_schema_length=None)
