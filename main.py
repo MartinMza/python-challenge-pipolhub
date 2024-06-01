@@ -2,7 +2,6 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
-from src.dataservice import DataService
 from src.graphql import graphql_app
 
 load_dotenv()

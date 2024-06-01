@@ -12,18 +12,22 @@ BigInt = strawberry.scalar(
     description="BigInt field",
 )
 
-@strawberry.type
+@strawberry.type(description="Return info from csv")
 class Query:
     """ Query class """
 
-    @strawberry.field
+    @strawberry.field(
+            description="This method return a only one row from csv"
+            )
     def get_row(self, where:str="", order_by:str="")->RowDataType:
         row: RowDataType = RowDataType.from_pydantic(DS.get_line(where=where, order_by=order_by))
         return row
 
-    @strawberry.field
-    def get_multi_line(self, where:str="", order_by:str="", limit:int=5)->ListDataType:
-        list_data: ListDataType = ListDataType.from_pydantic(DS.get_multi_lines(where=where,order_by=order_by, limit=limit))
+    @strawberry.field(
+            description="This method return a multi rows from csv"
+            )
+    def get_multi_line(self, where:str="", order_by:str="", limit:int=5, skip:int=0)->ListDataType:
+        list_data: ListDataType = ListDataType.from_pydantic(DS.get_multi_lines(where=where,order_by=order_by, limit=limit, skip=skip))
         return list_data   
 
 schema = strawberry.Schema(Query, scalar_overrides={int:BigInt})

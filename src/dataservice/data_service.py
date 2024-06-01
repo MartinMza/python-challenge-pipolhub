@@ -44,7 +44,7 @@ class DataService:
         return None
 
 
-    def get_multi_lines(self, where:Optional[str]="", order_by:Optional[str]="", limit:Optional[int]=5, query:Optional[str]=None)->ListData:
+    def get_multi_lines(self, where:Optional[str]="", order_by:Optional[str]="", limit:Union[str,int]=5, skip:Union[str,int]=0,query:Optional[str]=None)->ListData:
         """ This method return multi rows from CSV file """
         if query:
             result = self.lazy_frame.sql(query).collect().to_dicts()
@@ -54,7 +54,7 @@ class DataService:
         if where != "": where=f"WHERE {where}"
         if order_by != "": order_by=f"ORDER BY {order_by}"
 
-        result=self.lazy_frame.sql(f"SELECT * FROM self {where} {order_by}").limit(limit).collect().to_dicts()
+        result=self.lazy_frame.sql(f"SELECT * FROM self {where} {order_by} OFFSET {skip}").limit(int(limit)).collect().to_dicts()
 
         data = [RowData(**line) for line in result]
         return ListData(list_data=data)
