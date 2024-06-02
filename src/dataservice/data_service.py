@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from typing import Optional, Union
-from .model.data import RowData, ListData
+from .models.data import RowData, ListData
 from .utils.download_file import download_file
 
 load_dotenv()
