@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from src.graphql import graphql_app
 from src.auth import user,auth, validate_auth
+from src.dataservice import data
 
 load_dotenv()
 
@@ -18,3 +19,4 @@ async def health():
 app.include_router(graphql_app, prefix="/api/graphql")
 app.include_router(user, prefix="/api")
 app.include_router(auth, prefix="/api")
+app.include_router(data, prefix="/api")
