@@ -58,3 +58,5 @@ class DataService:
 
         data = [RowData(**line) for line in result]
         return ListData(list_data=data)
+
+DS = DataService()
