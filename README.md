@@ -22,6 +22,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 OPEN_AI = XXXXXXX
+```
 
 ## How to Run
 To run the application, follow these steps:
