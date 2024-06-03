@@ -1,11 +1,19 @@
-from ..models.user import UserInDB, UserResquest
+from ..models.user import UserInDB, UserRequest
 from .auth import get_password_hash
 from ..utils.fake_db import get_db, update_db
 
 
-async def created_new_user(user: UserResquest)->dict:
+async def created_new_user(user: UserRequest)->dict:
 
-    """ Creat new usar and update the fake DB"""
+    """
+    Create a new user and update the fake DB.
+
+    Args:
+        user (UserRequest): The user request object containing user details.
+
+    Returns:
+        dict: A dictionary with a success message or an error message.
+    """
 
     try:
 

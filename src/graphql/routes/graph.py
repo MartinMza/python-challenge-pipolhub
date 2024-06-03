@@ -12,21 +12,45 @@ BigInt = strawberry.scalar(
     description="BigInt field",
 )
 
-@strawberry.type(description="Return info from csv")
+@strawberry.type(description="Queries to retrieve data from the CSV file.")
 class Query:
-    """ Query class """
+    """ Query class for retrieving data from CSV. """
 
     @strawberry.field(
-            description="This method return a only one row from csv"
+            description="Retrieve a single row from the CSV file."
             )
     def get_row(self, where:str="", order_by:str="")->RowDataType:
+        """
+        Get a single row from the CSV file.
+
+        Args:
+            where (str): The condition to filter the data.
+            order_by (str): The order by which to sort the data.
+
+        Returns:
+            RowDataType: The retrieved row.
+        """
+        
         row: RowDataType = RowDataType.from_pydantic(DS.get_line(where=where, order_by=order_by))
         return row
 
     @strawberry.field(
-            description="This method return a multi rows from csv"
+            description="Retrieve multiple rows from the CSV file"
             )
     def get_multi_line(self, where:str="", order_by:str="", limit:int=5, skip:int=0)->ListDataType:
+        """
+        Get multiple rows from the CSV file.
+
+        Args:
+            where (str): The condition to filter the data.
+            order_by (str): The order by which to sort the data.
+            limit (int): The maximum number of rows to retrieve.
+            skip (int): The number of rows to skip.
+
+        Returns:
+            ListDataType: The list of retrieved rows.
+        """
+
         list_data: ListDataType = ListDataType.from_pydantic(DS.get_multi_lines(where=where,order_by=order_by, limit=limit, skip=skip))
         return list_data   
 

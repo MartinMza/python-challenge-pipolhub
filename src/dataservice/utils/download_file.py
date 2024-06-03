@@ -11,7 +11,15 @@ FILE_NAME:str = os.getenv("FILE_NAME")
 FILE_PATH:str = os.path.join(os.getcwd(), os.path.join(FILES_FOLDER_NAME, FILE_NAME))
 
 def _create_folder(file_path:str)->None:
-    """ This function creates a folder if it does not exist"""
+    """
+    Create the folder for the specified file path if it doesn't exist.
+
+    Args:
+        file_path (str): The path to the file for which to create the folder.
+
+    Raises:
+        Exception: If there's an error creating the folder.
+    """    
     try:
         folder_path = os.path.dirname(file_path)
         
@@ -29,9 +37,17 @@ def _create_folder(file_path:str)->None:
     
 
 def download_file(url:str, file_path:str=FILE_PATH)->None:
-    
-    """ This function download file from the URL """
+    """
+    Download a file from a URL to the specified file path.
 
+    Args:
+        url (str): The URL to download the file from.
+        file_path (str): The path where the downloaded file will be saved.
+
+    Raises:
+        Exception: If there's an error downloading the file.
+    """    
+    
     try:
         if os.path.exists(file_path):
             logger.info("The csv file exists")

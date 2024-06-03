@@ -16,7 +16,18 @@ auth = APIRouter(prefix="/auth", tags=["Auth"])
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
-    print(fake_users_db)
+    """
+    Logs in a user and returns an access token.
+
+    Args:
+        form_data (OAuth2PasswordRequestForm): The form data containing username and password.
+
+    Returns:
+        Token: The access token and its type.
+
+    Raises:
+        HTTPException: If the username or password is incorrect.
+    """
     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -30,9 +41,17 @@ async def login_for_access_token(
     )
     return Token(access_token=access_token, token_type="bearer")
 
-
 @auth.get("/users/me/", response_model=User)
 async def read_users_me(
     current_user: Annotated[User, Depends(validate_auth)],
 ):
+    """
+    Retrieves the current authenticated user.
+
+    Args:
+        current_user (User): The currently authenticated user.
+
+    Returns:
+        User: The user object.
+    """
     return current_user
