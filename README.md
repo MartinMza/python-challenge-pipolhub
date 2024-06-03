@@ -41,3 +41,10 @@ This will build the Docker image according to the specifications of the Dockerfi
 Once the application is up and running, you can access the API at the following address:
 *http://localhost:8000*
 
+
+## Accessing Swagger Documentation
+
+Once the application is running, you can access the Swagger documentation to explore and interact with the API. 
+
+###Navigate to Swagger UI:
+Go to the following URL to access the Swagger UI: *http://localhost:8000/docs*
