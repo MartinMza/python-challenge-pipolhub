@@ -46,5 +46,5 @@ Once the application is up and running, you can access the API at the following 
 
 Once the application is running, you can access the Swagger documentation to explore and interact with the API. 
 
-###Navigate to Swagger UI:
+### Navigate to Swagger UI:
 Go to the following URL to access the Swagger UI: *http://localhost:8000/docs*
