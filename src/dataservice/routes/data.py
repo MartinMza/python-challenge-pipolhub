@@ -1,6 +1,5 @@
 from fastapi import APIRouter,HTTPException,Query
-from fastapi.responses import JSONResponse
-from ..models.data import RowData, ListData
+from ..models.data import RowData, ListData, ListDataQuery
 from src.dataservice import DS
 from typing import Optional,Union
 
@@ -25,6 +24,19 @@ async def get_multi_rows(where:Optional[str]=Query(default=""), order_by:Optiona
     """ Endpoint get multi row """
     try:
         result = DS.get_multi_lines(where=where, order_by=order_by,limit=limit,skip=skip)
+        if result:
+            return result
+    
+        raise HTTPException(status_code=404, detail="Not Found")
+    
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Bad Requests: {str(e)}")
+
+@data.get(path="/get-rows-query", response_model=ListDataQuery, status_code=200)
+async def get_multi_rows(query:str=Query(default="")):
+    """ Endpoint get multi row """
+    try:
+        result = DS.get_multi_lines_by_query(query=query)
         if result:
             return result
     

@@ -51,7 +51,7 @@ class DataService:
         return ListData(list_data=data)
     
     def get_multi_lines_by_query(self,query:str):
-
+        query = query.replace("\n"," ").replace(";","")
         print(self.lazy_frame.sql(query).collect().to_dicts())
         result = self.lazy_frame.sql(query).collect().to_dicts()
         return ListDataQuery(list_data=result)

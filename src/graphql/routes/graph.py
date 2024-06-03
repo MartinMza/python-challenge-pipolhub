@@ -32,4 +32,4 @@ class Query:
 
 schema = strawberry.Schema(Query, scalar_overrides={int:BigInt})
 
-graphql_app = GraphQLRouter(schema=schema, graphiql=True,tags=["Graphql"], allow_queries_via_get=True)
+graphql_app = GraphQLRouter(schema=schema, graphiql=False,tags=["Graphql"], allow_queries_via_get=False)
