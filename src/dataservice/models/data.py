@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict, Union
 
 class RowData(BaseModel):
     """ This is the model from one row in the CSV file """
@@ -29,3 +29,6 @@ class RowData(BaseModel):
 class ListData(BaseModel):
     """ This is the model to listing the multiple rows of data in the CSV file """
     list_data: List[RowData]
+
+class ListDataQuery(BaseModel):
+    list_data: List[Dict]

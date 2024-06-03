@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from typing import Optional, Union
-from .models.data import RowData, ListData
+from .models.data import RowData, ListData, ListDataQuery
 from .utils.download_file import download_file
 
 load_dotenv()
@@ -27,13 +27,8 @@ class DataService:
         self.lazy_frame = pl.scan_csv(source=self.path_file, has_header=True, separator=sep,infer_schema_length=None)
 
   
-    def get_line(self, where:Optional[str]="", order_by:Optional[str]="", query:Optional[str]=None)->Union[RowData, None]:
+    def get_line(self, where:Optional[str]="", order_by:Optional[str]="")->Union[RowData, None]:
         """ This method return only one row from CSV file """
-        if query:
-            result=self.lazy_frame.sql(query).limit(1).collect().to_dicts()
-            if result: return RowData(**result[0])
-            
-            return None
 
         if where != "": where=f"WHERE {where}"
         if order_by != "": order_by=f"ORDER BY {order_by}"
@@ -44,13 +39,9 @@ class DataService:
         return None
 
 
-    def get_multi_lines(self, where:Optional[str]="", order_by:Optional[str]="", limit:Union[str,int]=5, skip:Union[str,int]=0,query:Optional[str]=None)->ListData:
+    def get_multi_lines(self, where:Optional[str]="", order_by:Optional[str]="", limit:Union[str,int]=5, skip:Union[str,int]=0,)->ListData:
         """ This method return multi rows from CSV file """
-        if query:
-            result = self.lazy_frame.sql(query).collect().to_dicts()
-            data = [RowData(**line) for line in result]
-            return ListData(list_data=data)
-
+        
         if where != "": where=f"WHERE {where}"
         if order_by != "": order_by=f"ORDER BY {order_by}"
 
@@ -58,5 +49,12 @@ class DataService:
 
         data = [RowData(**line) for line in result]
         return ListData(list_data=data)
+    
+    def get_multi_lines_by_query(self,query:str):
+
+        print(self.lazy_frame.sql(query).collect().to_dicts())
+        result = self.lazy_frame.sql(query).collect().to_dicts()
+        return ListDataQuery(list_data=result)
 
 DS = DataService()
+print(DS.lazy_frame.columns)
