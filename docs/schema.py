@@ -44,7 +44,10 @@ The API relies on the following dependencies:
     openapi_schema["paths"]["/api/graphql"]["post"] = {
         "tags": ["Graphql"],
         "summary":"GraphQL POST", 
-        "description": "This endpoint do it something and more...",
+        "description": """The GraphQL endpoint provides access to data stored in a CSV file. It supports two methods for querying the data:
+- **get_row**: Retrieves a single row from the CSV file. This method supports optional `where` and `order_by` filters.
+- **get_multi_line**: Retrieves multiple rows from the CSV file. This method supports optional `where` and `order_by` filters, as well as `limit` and `skip` parameters for pagination.
+""",
         "parameters": [
           {
             "name": "token",

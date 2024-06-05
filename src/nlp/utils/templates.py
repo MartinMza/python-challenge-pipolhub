@@ -1,27 +1,30 @@
 from langchain_core.prompts import PromptTemplate
 
-template_sql = """ Debe de manera imperativa devolver la siguiente consulta como si se tratara de una consulta SQL, tienes que tener encuenta las siguientes restricciones. Si no se puede formular como una consulta SQL retornar un string vacio ejemplo: "", Segun corresponda y no se expecifica un LIMIT el por defecto debe ser 5 y como maximo 10, solo si se requiere retornar campos de informacion :
+template_sql = """ 
+You must imperatively return the following query as an SQL query, considering the given constraints. 
+If it cannot be formulated as an SQL query, return an empty string (""). 
+By default, the LIMIT should be 5 if not specified, with a maximum of 10, only if it is required to return fields of information:
 
-campos tabla: {columns}
-tabla: self
-
-consulta: {text}
-
+- **Table Schema:** {schema}
+- **Table Name:** self
+- **Query:** {text}
 """
 
-template_respuesta_nlp = """ Debera responder de manera natural para que un usuario humano entienda los datos proporcionados en el campo 'data' que es el resultado de la busqueda en una base de datos según lo requerido en la pregunta. A continuación formule una respuesta con la información dada, es libre de interpretar los datos:
-datos : {data}
-contexto : {context}
-pregunta : {text}
+template_respuesta_nlp = """ You should respond naturally so that a human user can understand the data provided in the 'data' field, which is the result of a database search based on the question asked. 
+Formulate a response using the given information, and feel free to interpret the data:
+
+- **Data:** {data}
+- **Context:** {context}
+- **Question:** {text}
 
 """
 
 prompt_sql_query = PromptTemplate(
     template = template_sql,
-    input_variables=["columns","text"]
+    input_variables=["schema","text"]
 )
 
 prompt_response = PromptTemplate(
     template = template_respuesta_nlp,
-    input_variables=["data","columns","context","text"]
+    input_variables=["data","context","text"]
 )

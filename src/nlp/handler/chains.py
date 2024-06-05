@@ -43,11 +43,11 @@ def nlp_response(question: Question) -> str:
     Returns:
         str: The NLP response.
     """
-    columns = DS.lazy_frame.columns
-    sql_query = chain_sql_query.invoke({"columns": columns, "text": question.text})
+    schema = DS.lazy_frame.schema
+    sql_query = chain_sql_query.invoke({"schema": schema, "text": question.text})
     sql_query = _remove_character(sql_query.get("sql_query"))
     print(sql_query)
     data_result = DS.get_multi_lines_by_query(query=sql_query)
-    response = chain_response_user.invoke({"columns": columns, "data": data_result, "context": question.context, "text": question.text})
+    response = chain_response_user.invoke({"schema": schema, "data": data_result, "context": question.context, "text": question.text})
     
     return ResponseModel(response=response.get("response"))
